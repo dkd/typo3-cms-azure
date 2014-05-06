@@ -38,7 +38,9 @@ class EnableFileService {
 	 * @return bool
 	 */
 	static public function isFirstInstallAllowed() {
-		if (!is_dir(PATH_typo3conf) && is_file(self::getFirstInstallFilePath())) {
+		// if (!is_dir(PATH_typo3conf) && is_file(self::getFirstInstallFilePath())) {
+        // azure is_file() shipping typo3conf so we cannot check if typo3conf does not exists
+        if (is_file(self::getFirstInstallFilePath())) {
 			return TRUE;
 		}
 		return FALSE;
