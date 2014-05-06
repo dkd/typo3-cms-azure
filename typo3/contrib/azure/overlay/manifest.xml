@@ -1,0 +1,40 @@
+<msdeploy.iisapp> 
+
+  <iisapp path="typo3" />
+  
+  <!-- Create Database and grant privileges to ROOT user -->
+  <dbmysql path="install.sql"
+         commandDelimiter="$$"
+         removeCommandDelimiter="true" />
+
+  <alias from="web.config" to="typo3/web.config" /> 
+
+  <!-- Settings Directory permissions -->
+    <setAcl
+      path="typo3"
+      setAclAccess="Modify"
+      setAclUser="anonymousAuthenticationUser"
+    />
+    <setAcl
+      path="typo3/typo3conf"
+      setAclAccess="Modify"
+      setAclUser="anonymousAuthenticationUser"
+    />
+  <setAcl
+      path="typo3/typo3temp"
+      setAclAccess="Modify"
+      setAclUser="anonymousAuthenticationUser"
+    />
+    <setAcl
+      path="typo3/fileadmin"
+      setAclAccess="Modify"
+      setAclUser="anonymousAuthenticationUser"
+    />
+    <setAcl
+      path="typo3/uploads"
+      setAclAccess="Modify"
+      setAclUser="anonymousAuthenticationUser"
+    />
+
+</msdeploy.iisapp>
+

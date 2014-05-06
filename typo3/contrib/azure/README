@@ -1,0 +1,4 @@
+TYPO3 CMS Azure Packager
+The TYPO3 CMS git needs to be checked out in a folder called typo3 to enable the zipping.
+Then just cd to this directory and run azure.sh
+The script will package the TYPO3 CMS source and overlay the files in ./overlay 
