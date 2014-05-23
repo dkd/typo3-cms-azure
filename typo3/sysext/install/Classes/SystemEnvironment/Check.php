@@ -532,7 +532,9 @@ class Check {
 	 */
 	protected function checkOpenSslInstalled() {
 		if (extension_loaded('openssl')) {
-			$testKey = @openssl_pkey_new();
+            //AdditionalConfiguration is not loaded yet, so we have to hardcore the path
+            $configPath = realpath(dirname(__FILE__) . "/../../../../../typo3conf/openssl.cnf");
+			$testKey = @openssl_pkey_new(array('config' => $configPath));
 			if (is_resource($testKey)) {
 				openssl_free_key($testKey);
 				$status = new Status\OkStatus();

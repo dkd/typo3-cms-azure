@@ -22,6 +22,14 @@ namespace TYPO3\CMS\Rsaauth\Backend;
  * @author Dmitry Dulepov <dmitry@typo3.org>
  */
 class PhpBackend extends \TYPO3\CMS\Rsaauth\Backend\AbstractBackend {
+
+    /**
+	 * On AZURE we set the env in AdditionalConfiguration.php
+	 */
+    private static function OpenSSLConfig() {
+       return array('config' => getenv('OPENSSL_CONF'));
+    }
+
 	/**
 	 * Creates a new key pair for the encryption or gets the existing key pair (if one already has been generated).
 	 *
@@ -37,14 +45,14 @@ class PhpBackend extends \TYPO3\CMS\Rsaauth\Backend\AbstractBackend {
 			return $keyPair;
 		}
 
-		$privateKey = @openssl_pkey_new();
+		$privateKey = @openssl_pkey_new(self::OpenSSLConfig());
 		if ($privateKey !== FALSE) {
 			// Create private key as string
 			$privateKeyStr = '';
-			openssl_pkey_export($privateKey, $privateKeyStr);
+			openssl_pkey_export($privateKey, $privateKeyStr, NULL, self::OpenSSLConfig());
 			// Prepare public key information
 			$exportedData = '';
-			$csr = openssl_csr_new(array(), $privateKey);
+			$csr = openssl_csr_new(array(), $privateKey, self::OpenSSLConfig());
 			openssl_csr_export($csr, $exportedData, FALSE);
 			// Get public key (in fact modulus) and exponent
 			$publicKey = $this->extractPublicKeyModulus($exportedData);
@@ -92,7 +100,7 @@ class PhpBackend extends \TYPO3\CMS\Rsaauth\Backend\AbstractBackend {
 			// PHP extension has to be configured properly. It
 			// can be installed and available but will not work unless
 			// properly configured. So we check if it works.
-			$testKey = @openssl_pkey_new();
+			$testKey = @openssl_pkey_new(self::OpenSSLConfig());
 			if (is_resource($testKey)) {
 				openssl_free_key($testKey);
 				$result = TRUE;
