@@ -281,10 +281,13 @@ class Request implements \TYPO3\CMS\Core\SingletonInterface {
 						$tempFilename = \TYPO3\CMS\Core\Utility\GeneralUtility::fixWindowsFilePath($tempFilename);
 					}
 					if ($tempFilename !== '') {
-						// Use finfo to get the mime type
-						$finfo = finfo_open(FILEINFO_MIME_TYPE);
-						$mimeType = finfo_file($finfo, $tempFilename);
-						finfo_close($finfo);
+                        $mimeType = 'application/octet-stream';
+                        if (function_exists('finfo_file')) {
+                            $fileInfo = new \finfo();
+                            $mimeType = $fileInfo->file($absoluteFilePath, FILEINFO_MIME_TYPE);
+                        } else if (function_exists('mime_content_type')) {
+                            $fileInfo = mime_content_type($absoluteFilePath);
+                        }
 						$formData[$fieldName] = array(
 							'tempFilename' => $tempFilename,
 							'originalFilename' => $_FILES[$this->prefix]['name'][$fieldName],
