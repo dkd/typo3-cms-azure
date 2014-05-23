@@ -412,7 +412,10 @@ class PageGenerator {
 					$pageRenderer->setIconMimeType($iconMimeType);
 				}
 			}
-			$pageRenderer->setFavIcon(GeneralUtility::getIndpEnv('TYPO3_SITE_URL') . $favIcon);
+            else {
+                $iconMimeType = ' type="image/x-icon"';
+            }
+            $pageRenderer->setFavIcon(GeneralUtility::getIndpEnv('TYPO3_SITE_URL') . $favIcon);
 		}
 		// Including CSS files
 		if (is_array($GLOBALS['TSFE']->tmpl->setup['plugin.'])) {
