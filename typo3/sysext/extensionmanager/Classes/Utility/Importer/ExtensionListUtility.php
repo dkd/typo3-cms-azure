@@ -167,7 +167,7 @@ class ExtensionListUtility implements \SplObserver {
 		}
 		$versionRepresentations = \TYPO3\CMS\Core\Utility\VersionNumberUtility::convertVersionStringToArray($subject->getVersion());
 		// order must match that of self::$fieldNames!
-		$this->arrRows[] = array(
+        $newEntry = array(
 			$subject->getExtkey(),
 			$subject->getVersion(),
 			$versionRepresentations['version_int'],
@@ -190,7 +190,15 @@ class ExtensionListUtility implements \SplObserver {
 			$subject->getDependencies() ?: '',
 			$subject->getUploadcomment() ?: ''
 		);
-		++$this->sumRecords;
+        // on azure we want to strip everything except the last version to save space in the 20mb free database
+        // this will not catch versions between two 50 entry batches but should be enough for no
+        $last = end($this->arrRows);
+		if ($last[0] === $newEntry[0]) {
+            array_pop($this->arrRows);
+        } else {
+            ++$this->sumRecords;
+        }
+        $this->arrRows[] = $newEntry;
 	}
 
 	/**
