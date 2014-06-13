@@ -48,12 +48,12 @@ class TerUtility {
 		if ($t3x === FALSE) {
 			throw new ExtensionManagerException(sprintf('The T3X file "%s" could not be fetched. Possible reasons: network problems, allow_url_fopen is off,' . ' cURL is not enabled in Install Tool.', $mirrorUrl), 1334426097);
 		}
-		if ($md5 === $expectedMd5) {
-			// Fetch and return:
-			$extensionData = $this->decodeExchangeData($t3x);
-		} else {
-			throw new ExtensionManagerException('Error: MD5 hash of downloaded file not as expected:<br />' . $md5 . ' != ' . $expectedMd5, 1334426098);
-		}
+        // if ($md5 === $expectedMd5) {
+        // Fetch and return:
+        $extensionData = $this->decodeExchangeData($t3x);
+        // } else {
+        // throw new ExtensionManagerException('Error: MD5 hash of downloaded file not as expected:<br />' . $md5 . ' != ' . $expectedMd5, 1334426098);
+        // }
 		return $extensionData;
 	}
 
