@@ -26,7 +26,8 @@ class AjaxLoginHandler {
 	 * @return void
 	 */
 	public function getRsaPublicKey(array $parameters, \TYPO3\CMS\Core\Http\AjaxRequestHandler $parent) {
-		$backend = \TYPO3\CMS\Rsaauth\Backend\BackendFactory::getBackend();
+        putenv("OPENSSL_CONF=" . dirname(__FILE__) . "\..\..\..\..\..\typo3conf\AdditionalConfiguration.php");
+        $backend = \TYPO3\CMS\Rsaauth\Backend\BackendFactory::getBackend();
 		if ($backend !== NULL) {
 			$keyPair = $backend->createNewKeyPair();
 			$storage = \TYPO3\CMS\Rsaauth\Storage\StorageFactory::getStorage();

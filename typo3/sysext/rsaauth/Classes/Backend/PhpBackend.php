@@ -27,7 +27,8 @@ class PhpBackend extends \TYPO3\CMS\Rsaauth\Backend\AbstractBackend {
 	 * On AZURE we set the env in AdditionalConfiguration.php
 	 */
     private static function OpenSSLConfig() {
-       return array('config' => getenv('OPENSSL_CONF'));
+        $w = array('config' => dirname(__FILE__) . "\openssl.cnf");
+        return $w;
     }
 
 	/**
