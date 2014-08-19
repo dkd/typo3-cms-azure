@@ -32,6 +32,6 @@ Todo:
   Fix package handling/reenable md5 checks
 
 Future:
-  Remote dependency resolving?
-  Porting fileinfo change to Core
+  Remote dependency resolving? Probably happening in v7
+  Porting fileinfo change to Core: https://review.typo3.org/#/c/31256/
   Improve OpenSSL config in core or use PHP only lib as fallback
