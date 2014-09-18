@@ -7,5 +7,7 @@ $GLOBALS['TYPO3_CONF_VARS']['DB']['password'] = 'PlaceHolderForPassword';
 //we need to disable the strict mode
 $GLOBALS['TYPO3_CONF_VARS']['SYS']['setDBinit'] = "SET SESSION sql_mode='';";
 //fix openssl config path
-putenv("OPENSSL_CONF=" . dirname(__FILE__) . "\openssl.cnf")
+putenv("OPENSSL_CONF=" . dirname(__FILE__) . "\openssl.cnf");
+
+$GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['rtehtmlarea']['defaultConfiguration'] = 'typical';
 ?>
