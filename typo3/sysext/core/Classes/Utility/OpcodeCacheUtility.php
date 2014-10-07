@@ -89,21 +89,21 @@ class OpcodeCacheUtility {
 			),
 
 			// http://www.php.net/manual/de/book.wincache.php
-			'WinCache' => array(
-				'active' => extension_loaded('wincache') && ini_get('wincache.ocenabled') === '1',
-				'version' => phpversion('wincache'),
-				'canReset' => FALSE,
-				'canInvalidate' => TRUE, // wincache_refresh_if_changed()
-				'error' => FALSE,
-				'clearCallback' => function ($fileAbsPath) {
-					if ($fileAbsPath !== NULL) {
-						wincache_refresh_if_changed(array($fileAbsPath));
-					} else {
-						// No argument means refreshing all.
-						wincache_refresh_if_changed();
-					}
-				}
-			),
+			/* 'WinCache' => array( */
+			/* 	'active' => extension_loaded('wincache') && ini_get('wincache.ocenabled') === '1', */
+			/* 	'version' => phpversion('wincache'), */
+			/* 	'canReset' => FALSE, */
+			/* 	'canInvalidate' => TRUE, // wincache_refresh_if_changed() */
+			/* 	'error' => FALSE, */
+			/* 	'clearCallback' => function ($fileAbsPath) { */
+			/* 		if ($fileAbsPath !== NULL) { */
+			/* 			wincache_refresh_if_changed(array($fileAbsPath)); */
+			/* 		} else { */
+			/* 			// No argument means refreshing all. */
+			/* 			wincache_refresh_if_changed(); */
+			/* 		} */
+			/* 	} */
+			/* ), */
 
 			// http://xcache.lighttpd.net/
 			'XCache' => array(

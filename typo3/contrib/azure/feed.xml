@@ -31,7 +31,7 @@
     </author>
     <dependency>
       <and>
-        <dependency idref="PHP54App" />
+        <dependency idref="PHP53App" />
         <dependency idref="MySQLApp" />
       </and>
     </dependency>
@@ -40,7 +40,7 @@
         <id>1</id>
         <languageId>en</languageId>
         <installerFile> <installerURL>file://\\VBOXSVR\azure\typo3\typo3\contrib\azure\package.zip</installerURL>
-          <sha1>74f0d3d765f654ff6c4903b4226eee221b60d59e</sha1>
+          <sha1>0958350d94c1c219b2fbf4485c9fa82038d91c1d</sha1>
         </installerFile>
         <msDeploy />
       </installer>
