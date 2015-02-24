@@ -1,0 +1,53 @@
+From 074e69d8c1198bd095fe738df408259a3aac89fa Mon Sep 17 00:00:00 2001
+From: Johannes Goslar <johannes.goslar@dkd.de>
+Date: Tue, 24 Feb 2015 14:50:21 +0000
+Subject: [PATCH] [AZURE] disable wincache
+
+---
+ .../core/Classes/Utility/OpcodeCacheUtility.php    | 30 +++++++++++-----------
+ 1 file changed, 15 insertions(+), 15 deletions(-)
+
+diff --git a/typo3/sysext/core/Classes/Utility/OpcodeCacheUtility.php b/typo3/sysext/core/Classes/Utility/OpcodeCacheUtility.php
+index 344b3a9..4bc06dd 100644
+--- a/typo3/sysext/core/Classes/Utility/OpcodeCacheUtility.php
++++ b/typo3/sysext/core/Classes/Utility/OpcodeCacheUtility.php
+@@ -89,21 +89,21 @@ class OpcodeCacheUtility {
+ 			),
+ 
+ 			// http://www.php.net/manual/de/book.wincache.php
+-			'WinCache' => array(
+-				'active' => extension_loaded('wincache') && ini_get('wincache.ocenabled') === '1',
+-				'version' => phpversion('wincache'),
+-				'canReset' => FALSE,
+-				'canInvalidate' => TRUE, // wincache_refresh_if_changed()
+-				'error' => FALSE,
+-				'clearCallback' => function ($fileAbsPath) {
+-					if ($fileAbsPath !== NULL) {
+-						wincache_refresh_if_changed(array($fileAbsPath));
+-					} else {
+-						// No argument means refreshing all.
+-						wincache_refresh_if_changed();
+-					}
+-				}
+-			),
++			/* 'WinCache' => array( */
++			/* 	'active' => extension_loaded('wincache') && ini_get('wincache.ocenabled') === '1', */
++			/* 	'version' => phpversion('wincache'), */
++			/* 	'canReset' => FALSE, */
++			/* 	'canInvalidate' => TRUE, // wincache_refresh_if_changed() */
++			/* 	'error' => FALSE, */
++			/* 	'clearCallback' => function ($fileAbsPath) { */
++			/* 		if ($fileAbsPath !== NULL) { */
++			/* 			wincache_refresh_if_changed(array($fileAbsPath)); */
++			/* 		} else { */
++			/* 			// No argument means refreshing all. */
++			/* 			wincache_refresh_if_changed(); */
++			/* 		} */
++			/* 	} */
++			/* ), */
+ 
+ 			// http://xcache.lighttpd.net/
+ 			'XCache' => array(
+-- 
+2.2.1
+

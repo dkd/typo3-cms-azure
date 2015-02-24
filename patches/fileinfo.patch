@@ -1,0 +1,47 @@
+From f90a075814ee352c48f678f632705e181a5031d1 Mon Sep 17 00:00:00 2001
+From: Johannes Goslar <johannes.goslar@dkd.de>
+Date: Tue, 24 Feb 2015 14:54:13 +0000
+Subject: [PATCH] [AZURE] remove fileinfo dependency
+
+---
+ typo3/sysext/form/Classes/Request.php                    | 11 +++++++----
+ typo3/sysext/install/Classes/SystemEnvironment/Check.php |  1 -
+ 2 files changed, 7 insertions(+), 5 deletions(-)
+
+diff --git a/typo3/sysext/form/Classes/Request.php b/typo3/sysext/form/Classes/Request.php
+index 8fd4ee2..7777f06 100644
+--- a/typo3/sysext/form/Classes/Request.php
++++ b/typo3/sysext/form/Classes/Request.php
+@@ -281,10 +281,13 @@ class Request implements \TYPO3\CMS\Core\SingletonInterface {
+ 						$tempFilename = \TYPO3\CMS\Core\Utility\GeneralUtility::fixWindowsFilePath($tempFilename);
+ 					}
+ 					if ($tempFilename !== '') {
+-						// Use finfo to get the mime type
+-						$finfo = finfo_open(FILEINFO_MIME_TYPE);
+-						$mimeType = finfo_file($finfo, $tempFilename);
+-						finfo_close($finfo);
++                        $mimeType = 'application/octet-stream';
++                        if (function_exists('finfo_file')) {
++                            $fileInfo = new \finfo();
++                            $mimeType = $fileInfo->file($absoluteFilePath, FILEINFO_MIME_TYPE);
++                        } else if (function_exists('mime_content_type')) {
++                            $fileInfo = mime_content_type($absoluteFilePath);
++                        }
+ 						$formData[$fieldName] = array(
+ 							'tempFilename' => $tempFilename,
+ 							'originalFilename' => $_FILES[$this->prefix]['name'][$fieldName],
+diff --git a/typo3/sysext/install/Classes/SystemEnvironment/Check.php b/typo3/sysext/install/Classes/SystemEnvironment/Check.php
+index 0536143..6bce8e0 100644
+--- a/typo3/sysext/install/Classes/SystemEnvironment/Check.php
++++ b/typo3/sysext/install/Classes/SystemEnvironment/Check.php
+@@ -52,7 +52,6 @@ class Check {
+ 	 * @var array List of required PHP extensions
+ 	 */
+ 	protected $requiredPhpExtensions = array(
+-		'fileinfo',
+ 		'filter',
+ 		'gd',
+ 		'hash',
+-- 
+2.2.1
+

@@ -1,0 +1,21 @@
+From 7dda67f22959cd1ecc33ec3ed89e062906d47035 Mon Sep 17 00:00:00 2001
+From: Johannes Goslar <johannes.goslar@dkd.de>
+Date: Tue, 24 Feb 2015 15:19:53 +0000
+Subject: [PATCH] [AZURE] user ini
+
+---
+ .user.ini | 2 ++
+ 1 file changed, 2 insertions(+)
+ create mode 100644 .user.ini
+
+diff --git a/.user.ini b/.user.ini
+new file mode 100644
+index 0000000..352f7f8
+--- /dev/null
++++ b/.user.ini
+@@ -0,0 +1,2 @@
++upload_max_filesize = 10M
++post_max_size = 10M
+-- 
+2.2.1
+

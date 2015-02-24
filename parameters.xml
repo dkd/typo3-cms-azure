@@ -1,0 +1,201 @@
+<parameters>
+  
+  <!-- Prompts where to copy the content files and takes a web site path (such as "contoso.com/app"). -->
+  <parameter name="ApplicationPath"
+             description="Full site path you would like to install your application to(i.e. Default Web Site/typo3)."
+             defaultValue="Default Web Site/typo3"
+             tags="iisapp" >
+
+    <parameterEntry
+        type="ProviderPath"
+        scope="iisapp"
+        match="typo3$" />
+  </parameter>
+
+  <!-- Acl parameter for conf and temp folders -->
+  <parameter name="SetAclParameter0"
+             description="Sets the ACL on the root folder"
+             defaultValue="{ApplicationPath}"
+             tags="Hidden" >
+    
+    <parameterEntry
+        type="ProviderPath"
+        scope="setAcl"
+        match="typo3"/>
+  </parameter>
+
+  <parameter name="SetAclParameter1"
+             description="Sets the ACL on typo3conf"
+             defaultValue="{ApplicationPath}/typo3conf"
+             tags="Hidden" >
+    
+    <parameterEntry
+        type="ProviderPath"
+        scope="setAcl"
+        match="typo3/typo3conf"/>
+  </parameter>
+
+  <parameter name="SetAclParameter2"
+             description="Sets the ACL on typo3temp"
+             defaultValue="{ApplicationPath}/typo3temp"
+             tags="Hidden" >
+
+    <parameterEntry
+        type="ProviderPath"
+        scope="setAcl"
+        match="typo3/typo3temp"/>
+  </parameter>
+
+  <parameter name="SetAclParameter3"
+             description="Sets the ACL on fileadmin"
+             defaultValue="{ApplicationPath}/fileadmin"
+             tags="Hidden" >
+
+    <parameterEntry
+        type="ProviderPath"
+        scope="setAcl"
+        match="typo3/fileadmin"/>
+  </parameter>
+  
+  <parameter name="SetAclParameter4"
+             description="Sets the ACL on uploads"
+             defaultValue="{ApplicationPath}/uploads"
+             tags="Hidden" >
+
+    <parameterEntry
+        type="ProviderPath"
+        scope="setAcl"
+        match="typo3/uploads"/>
+  </parameter>
+  
+  <!-- Database Parameters -->
+
+  <!-- Prompts the user for the database server name.-->
+  <!-- Note that this parameter has only one parameterEntry element. This parameter is used with the configuration file and the connection string.  It is not used within the SQL script itself like the other paramters are. -->
+
+  <parameter name="DatabaseServer"
+             description="This is usually localhost or a host name provided by the hosting provider."
+             defaultValue="localhost"
+             tags="MySQL, dbServer" >
+
+    <!-- Parameter substitution -->
+    <parameterEntry
+        type="TextFile"
+        scope="install.sql"
+        match="PlaceHolderForServer" />
+    
+  </parameter>
+
+  <parameter name="Automatic DbServer"
+  defaultValue="$GLOBALS['TYPO3_CONF_VARS']['DB']['host'] = '{DatabaseServer}';"
+  tags="Hidden" >
+    <parameterEntry
+        type="TextFile"
+        scope="\\typo3conf\\AdditionalConfiguration.php"
+        match="\$GLOBALS\['TYPO3_CONF_VARS'\]\['DB'\]\['host'\].[^;]*;" />
+  </parameter>
+
+  <!-- Prompts the user for the database name.  -->
+  <parameter name="DatabaseName"
+             description="Database Name for your application. Please note database name must start with a letter and must be in lowercase. You can also use numerals and underscore(_)."
+             defaultValue="typo3"
+             tags="MySQL, dbName" >
+
+    <!-- This Regular expression ensures that Database name can be alphanumeric and allows _ character -->
+    <parameterValidation type="RegularExpression"
+                         validationString="^[a-z_0-9]+$" />
+
+    <!-- Parameter substitution-->
+    <parameterEntry
+        type="TextFile"
+        scope="install.sql"
+        match="PlaceHolderForDb" />
+
+  </parameter>
+
+  <parameter name="Automatic DbName"
+             defaultValue="$GLOBALS['TYPO3_CONF_VARS']['DB']['database']='{DatabaseName}';"
+             tags="Hidden" >
+    <parameterEntry
+        type="TextFile"
+        scope="\\typo3conf\\AdditionalConfiguration.php"
+        match="\$GLOBALS\['TYPO3_CONF_VARS'\]\['DB'\]\['database'\].[^;]*;" />
+  </parameter>
+
+  
+  <!--Prompts the user for MYSQL the database username. -->
+
+  <parameter name="DatabaseAdministratorUsername"
+             description="Database administrator username"
+             defaultValue="root"
+             tags="MySQL, DbAdminUsername" >
+
+  </parameter>
+
+  <!-- Prompts the user for the MYSQL database user's password.   -->
+
+  <parameter name="DatabaseAdministratorPassword"
+             description="Database administrator password "
+             tags="Password, MySQL, DbAdminPassword" >
+
+  </parameter>
+
+  <parameter name="DatabaseUsername"
+             description="Username to access your typo3 database"
+             defaultValue="typo3"
+             tags="MySQL, DbUsername">
+    <!-- Parameter substitution-->
+    <parameterEntry
+        type="TextFile"
+        scope="install.sql"
+        match="PlaceHolderForUser" />
+    
+  </parameter>
+
+  <parameter name="Automatic DbUsername" defaultValue="$GLOBALS['TYPO3_CONF_VARS']['DB']['username']='{DatabaseUsername}';"  tags="Hidden" >
+    <parameterEntry
+        type="TextFile"
+        scope="\\typo3conf\\AdditionalConfiguration.php"
+        match="\$GLOBALS\['TYPO3_CONF_VARS'\]\['DB'\]\['username'\].[^;]*;" />
+  </parameter>
+
+  <!--  Prompts for the database password and fills it into the database scripts.The MySQL tag indicates it is a parameter required for MySQL, the DbUserPassword tag indicates this is a Db password -->
+  <parameter name="DatabasePassword"
+             description="Password for your typo3 database(Minimum 4 characters)"
+             tags="New, Password, MySQL, DbUserPassword">
+    
+    <!--  This Regular Expression ensures that Passwords will must be 4 characters in length  -->
+    <parameterValidation type="RegularExpression" validationString="^(.){4,}$" />
+
+    <!-- Parameter substitution-->
+    <parameterEntry
+        type="TextFile"
+        scope="install.sql"
+        match="PlaceHolderForPassword" />
+    
+  </parameter>
+
+
+  <parameter name="Automatic DbPassword" defaultValue="$GLOBALS['TYPO3_CONF_VARS']['DB']['password']='{DatabasePassword}';"  tags="Hidden">
+    <parameterEntry
+        type="TextFile"
+        scope="\\typo3conf\\AdditionalConfiguration.php"
+        match="\$GLOBALS\['TYPO3_CONF_VARS'\]\['DB'\]\['password'\].[^;]*;" />
+  </parameter>
+
+  <!-- This is the hidden admin connection string used to run the database scripts. -->
+
+  <parameter name="ConnectionString"
+             description="Automatically sets the connection string for the connection request."
+             defaultValue="Server={DatabaseServer};Database={DatabaseName};uid={DatabaseAdministratorUsername};Pwd={DatabaseAdministratorPassword};"
+             tags="Hidden,MySQLConnectionString,Validate" >
+
+    <parameterEntry
+        type="ProviderPath"
+        scope="dbmysql"
+        match="install.sql" />
+    
+  </parameter>  
+
+</parameters>
+
