@@ -2,7 +2,7 @@
 cd typo3/
 git reset --hard HEAD
 git clean -x -f -d
-git apply ../patches/*
+git apply -v ../patches/*
 cd ..
 zip -r --filesync package.zip typo3 install.sql manifest.xml parameters.xml web.config
 SHA1=$(openssl sha1 package.zip | cut -d " " -f 2)
