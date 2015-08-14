@@ -2,6 +2,7 @@
 cd typo3/
 git reset --hard HEAD
 git clean -x -f -d
+composer.phar install
 git apply -v ../patches/*
 cd ..
 zip -r --filesync package.zip typo3 install.sql manifest.xml parameters.xml web.config
