@@ -40,7 +40,7 @@
         <id>1</id>
         <languageId>en</languageId>
         <installerFile> <installerURL>file://\\VBOXSVR\azure\package.zip</installerURL>
-          <sha1>190de477c1d6cbfa768a914bf271478f81bf0c2c</sha1>
+          <sha1>dba8bb3a4b75b473625fe429b6d673ff2bd2415c</sha1>
         </installerFile>
         <msDeploy />
       </installer>

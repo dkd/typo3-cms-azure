@@ -1,0 +1,16 @@
+From 03e6e76072858b531e80871a98d27eb0454f610d Mon Sep 17 00:00:00 2001
+From: ksjogo <jogo@kronberger-spiele.de>
+Date: Fri, 14 Aug 2015 13:36:41 +0200
+Subject: [PATCH] first install azure
+
+---
+ FIRST_INSTALL | 0
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+ create mode 100644 FIRST_INSTALL
+
+diff --git a/FIRST_INSTALL b/FIRST_INSTALL
+new file mode 100644
+index 0000000..e69de29
+-- 
+2.5.0
+
