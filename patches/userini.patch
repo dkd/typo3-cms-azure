@@ -1,21 +1,22 @@
-From 7dda67f22959cd1ecc33ec3ed89e062906d47035 Mon Sep 17 00:00:00 2001
-From: Johannes Goslar <johannes.goslar@dkd.de>
-Date: Tue, 24 Feb 2015 15:19:53 +0000
-Subject: [PATCH] [AZURE] user ini
+From cd56bb67dd8eed2e209d9765988c867a57f1b2a7 Mon Sep 17 00:00:00 2001
+From: ksjogo <jogo@kronberger-spiele.de>
+Date: Fri, 14 Aug 2015 12:53:39 +0200
+Subject: [PATCH] .user.ini
 
 ---
- .user.ini | 2 ++
- 1 file changed, 2 insertions(+)
+ .user.ini | 3 +++
+ 1 file changed, 3 insertions(+)
  create mode 100644 .user.ini
 
 diff --git a/.user.ini b/.user.ini
 new file mode 100644
-index 0000000..352f7f8
+index 0000000..0797a5b
 --- /dev/null
 +++ b/.user.ini
-@@ -0,0 +1,2 @@
+@@ -0,0 +1,3 @@
 +upload_max_filesize = 10M
 +post_max_size = 10M
++max_execution_time = 240
 -- 
-2.2.1
+2.5.0
 
