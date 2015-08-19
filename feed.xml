@@ -39,8 +39,9 @@
       <installer>
         <id>1</id>
         <languageId>en</languageId>
-        <installerFile> <installerURL>file://\\VBOXSVR\azure\package.zip</installerURL>
-          <sha1>1664595503fd0c16de13a1a4442d382a47905ac2</sha1>
+        <installerFile>
+ <installerURL>C:\Users\dkd-azure\typo3\package.zip</installerURL>
+          <sha1>1660ab496dc2cbc9a6d36000c7f15ca9ed66e71f</sha1>
         </installerFile>
         <msDeploy />
       </installer>
