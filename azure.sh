@@ -2,7 +2,7 @@
 if [ $OSTYPE == "msys" ]
 then
 echo "On Windows"
-export PATH="/c/Program Files (x86)/IIS Express/PHP/v5.5/":$PATH
+export PATH="/c/Program Files (x86)/PHP/v5.5/":$PATH
 export PATH="/c/Program Files (x86)/GnuWin32/bin":$PATH
 else
 echo "No Windows"

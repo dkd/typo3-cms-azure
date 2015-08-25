@@ -13,11 +13,15 @@ new file mode 100644
 index 0000000..0797a5b
 --- /dev/null
 +++ b/.user.ini
-@@ -0,0 +1,4 @@
+@@ -0,0 +1,8 @@
 +upload_max_filesize = 10M
 +post_max_size = 10M
 +max_execution_time = 240
 +max_input_vars = 1500
++wincache.maxfilesize = 4096
++wincache.reroute_enabled = On
++wincache.ocenabled = On
++opcache.enable = Off
 -- 
 2.5.0
 
