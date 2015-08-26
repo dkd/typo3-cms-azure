@@ -1,4 +1,4 @@
-From 1b0f8cb5d671712590893499ed7184af5252d992 Mon Sep 17 00:00:00 2001
+From 95b993d77a332a27c7a836dd594547f45e082d10 Mon Sep 17 00:00:00 2001
 From: Johannes Goslar <johannes.goslar@dkd.de>
 Date: Fri, 14 Aug 2015 12:49:18 +0200
 Subject: [PATCH 2/6] Remove fileinfo from required php extensions
@@ -21,5 +21,5 @@ index ba8d555..5e0bf66 100644
  		'gd',
  		'hash',
 -- 
-2.5.0
+1.9.4.msysgit.1
 

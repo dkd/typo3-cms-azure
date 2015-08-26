@@ -1,4 +1,4 @@
-From 751fe47c16281e3db5180b6044b4174897452ba6 Mon Sep 17 00:00:00 2001
+From da9ab266f8d3b326e16b856eb8e7f16902e62bf1 Mon Sep 17 00:00:00 2001
 From: Johannes Goslar <johannes.goslar@dkd.de>
 Date: Fri, 14 Aug 2015 12:53:39 +0200
 Subject: [PATCH 6/6] .user.ini
@@ -23,5 +23,5 @@ index 0000000..fe0573a
 +wincache.ocenabled = On
 +opcache.enable = Off
 -- 
-2.5.0
+1.9.4.msysgit.1
 

@@ -1,4 +1,4 @@
-From bedd75281f39430b9f49aa16a7394165c42245e0 Mon Sep 17 00:00:00 2001
+From 4a9e7fd2c87c50abd33917c9703476e28d4276d9 Mon Sep 17 00:00:00 2001
 From: Johannes Goslar <johannes.goslar@dkd.de>
 Date: Fri, 14 Aug 2015 13:36:41 +0200
 Subject: [PATCH 3/6] First Install
@@ -12,5 +12,5 @@ diff --git a/FIRST_INSTALL b/FIRST_INSTALL
 new file mode 100644
 index 0000000..e69de29
 -- 
-2.5.0
+1.9.4.msysgit.1
 
