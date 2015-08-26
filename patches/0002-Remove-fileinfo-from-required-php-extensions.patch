@@ -1,7 +1,7 @@
-From 7cacf223a200aa585da4a0215a0348595de8233a Mon Sep 17 00:00:00 2001
-From: ksjogo <jogo@kronberger-spiele.de>
+From 1b0f8cb5d671712590893499ed7184af5252d992 Mon Sep 17 00:00:00 2001
+From: Johannes Goslar <johannes.goslar@dkd.de>
 Date: Fri, 14 Aug 2015 12:49:18 +0200
-Subject: [PATCH] Remove fileinfo from required PhpExtensions
+Subject: [PATCH 2/6] Remove fileinfo from required php extensions
 
 ---
  typo3/sysext/install/Classes/SystemEnvironment/Check.php | 2 +-

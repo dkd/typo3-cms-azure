@@ -17,11 +17,12 @@ git am ../patches/*
 cd ..
 zip -r --filesync package.zip typo3 install.sql manifest.xml parameters.xml web.config
 SHA1=$(openssl sha1 package.zip | cut -d " " -f 2)
-sed -i'' "s|<sha1>.*</sha1>|<sha1>$SHA1</sha1>|g" feed.xml
+sed -i.bak "s|<sha1>.*</sha1>|<sha1>$SHA1</sha1>|g" feed.xml
 echo $SHA1
 if [ $OSTYPE == "msys" ]
 then
-sed -i'' "s|<installerURL>.*</installerURL>|<installerURL>C:\\\\Users\\\\dkd-azure\\\\typo3\\\\package.zip</installerURL>|g" feed.xml
+    sed -i.bak "s|<installerURL>.*</installerURL>|<installerURL>C:\\\\Users\\\\dkd-azure\\\\typo3\\\\package.zip</installerURL>|g" feed.xml
 else
-sed -i'' "s|<installerURL>.*</installerURL>|<installerURL>file://\\\\\\\\VBOXSVR\\\\azure\\\\package.zip</installerURL>|g" feed.xml
+    sed -i.bak "s|<installerURL>.*</installerURL>|<installerURL>file://\\\\\\\\VBOXSVR\\\\azure\\\\package.zip</installerURL>|g" feed.xml
 fi
+rm *.bak

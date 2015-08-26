@@ -1,7 +1,7 @@
-From 03e6e76072858b531e80871a98d27eb0454f610d Mon Sep 17 00:00:00 2001
-From: ksjogo <jogo@kronberger-spiele.de>
+From bedd75281f39430b9f49aa16a7394165c42245e0 Mon Sep 17 00:00:00 2001
+From: Johannes Goslar <johannes.goslar@dkd.de>
 Date: Fri, 14 Aug 2015 13:36:41 +0200
-Subject: [PATCH] first install azure
+Subject: [PATCH 3/6] First Install
 
 ---
  FIRST_INSTALL | 0

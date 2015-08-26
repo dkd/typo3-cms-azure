@@ -1,16 +1,16 @@
-From f8fe3ba9d05c68d49f7edd85f1f16bba80fbd92d Mon Sep 17 00:00:00 2001
-From: ksjogo <jogo@kronberger-spiele.de>
+From a653bd17e75ce2e5f8cf1f1ce4db06fdb778b553 Mon Sep 17 00:00:00 2001
+From: Johannes Goslar <johannes.goslar@dkd.de>
 Date: Fri, 14 Aug 2015 13:13:52 +0200
-Subject: [PATCH] openssl
+Subject: [PATCH 5/6] fix openssl
 
 ---
  .../install/Classes/SystemEnvironment/Check.php    |   8 +-
  .../rsaauth/Classes/Backend/AjaxLoginHandler.php   |   5 +-
  .../sysext/rsaauth/Classes/Backend/PhpBackend.php  | 206 +++++++++++----------
  typo3/sysext/rsaauth/Classes/Backend/openssl.cnf   |   9 +
- typo3conf/AdditionalConfiguration.php              |   5 +-
+ typo3conf/AdditionalConfiguration.php              |   8 +-
  typo3conf/openssl.cnf                              |   9 +
- 6 files changed, 137 insertions(+), 105 deletions(-)
+ 6 files changed, 137 insertions(+), 108 deletions(-)
  create mode 100644 typo3/sysext/rsaauth/Classes/Backend/openssl.cnf
  create mode 100644 typo3conf/openssl.cnf
 
@@ -289,16 +289,23 @@ index 0000000..df37c3d
 +[ v3_req ]
 +[ v3_ca ]
 diff --git a/typo3conf/AdditionalConfiguration.php b/typo3conf/AdditionalConfiguration.php
-index 269cb19..d685c61 100644
+index 3db2e3a..b176bc8 100644
 --- a/typo3conf/AdditionalConfiguration.php
 +++ b/typo3conf/AdditionalConfiguration.php
-@@ -10,4 +10,7 @@ $GLOBALS['TYPO3_CONF_VARS']['SYS']['setDBinit'] = "SET SESSION sql_mode='';";
- //set to flock as simple can have problems on azure
- $GLOBALS['TYPO3_CONF_VARS']['SYS']['lockingMode'] = 'flock';
+@@ -12,11 +12,11 @@ $GLOBALS['TYPO3_CONF_VARS']['SYS']['lockingMode'] = 'flock';
  
--$GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['rtehtmlarea']['defaultConfiguration'] = 'typical';
+ $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['rtehtmlarea']['defaultConfiguration'] = 'typical';
+ 
+-//fix openssl config path
+-putenv("OPENSSL_CONF=" . dirname(__FILE__) . "\openssl.cnf");
+-
+ $types = array("cache_pages", "cache_pagesection", "cache_hash", "cache_rootline");
+ foreach ($types as $ct) {
+     $GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations'][$ct]['backend'] = 'TYPO3\\CMS\\Core\\Cache\\Backend\\WincacheBackend';
+     $GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations'][$ct]['options'] = array();
+-};
 \ No newline at end of file
-+$GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['rtehtmlarea']['defaultConfiguration'] = 'typical';
++};
 +
 +//fix openssl config path
 +putenv("OPENSSL_CONF=" . dirname(__FILE__) . "\openssl.cnf");

@@ -1,16 +1,16 @@
-From cd56bb67dd8eed2e209d9765988c867a57f1b2a7 Mon Sep 17 00:00:00 2001
-From: ksjogo <jogo@kronberger-spiele.de>
+From 751fe47c16281e3db5180b6044b4174897452ba6 Mon Sep 17 00:00:00 2001
+From: Johannes Goslar <johannes.goslar@dkd.de>
 Date: Fri, 14 Aug 2015 12:53:39 +0200
-Subject: [PATCH] .user.ini
+Subject: [PATCH 6/6] .user.ini
 
 ---
- .user.ini | 3 +++
- 1 file changed, 3 insertions(+)
+ .user.ini | 8 ++++++++
+ 1 file changed, 8 insertions(+)
  create mode 100644 .user.ini
 
 diff --git a/.user.ini b/.user.ini
 new file mode 100644
-index 0000000..0797a5b
+index 0000000..fe0573a
 --- /dev/null
 +++ b/.user.ini
 @@ -0,0 +1,8 @@

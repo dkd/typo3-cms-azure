@@ -1,0 +1,52 @@
+From 7f1a53905a6b9751c6e5696e60c965ab062c77fc Mon Sep 17 00:00:00 2001
+From: Johannes Goslar <johannes.goslar@dkd.de>
+Date: Tue, 25 Aug 2015 16:42:47 +0200
+Subject: [PATCH 4/6] fix wincache on local machines
+
+---
+ typo3/sysext/core/Classes/Service/OpcodeCacheService.php |  7 +------
+ typo3conf/AdditionalConfiguration.php                    | 11 ++++++++++-
+ 2 files changed, 11 insertions(+), 7 deletions(-)
+
+diff --git a/typo3/sysext/core/Classes/Service/OpcodeCacheService.php b/typo3/sysext/core/Classes/Service/OpcodeCacheService.php
+index 714250b..1142a57 100644
+--- a/typo3/sysext/core/Classes/Service/OpcodeCacheService.php
++++ b/typo3/sysext/core/Classes/Service/OpcodeCacheService.php
+@@ -59,12 +59,7 @@ class OpcodeCacheService {
+ 				'canInvalidate' => TRUE, // wincache_refresh_if_changed()
+ 				'error' => FALSE,
+ 				'clearCallback' => function ($fileAbsPath) {
+-					if ($fileAbsPath !== NULL) {
+-						wincache_refresh_if_changed(array($fileAbsPath));
+-					} else {
+-						// No argument means refreshing all.
+-						wincache_refresh_if_changed();
+-					}
++					wincache_refresh_if_changed();
+ 				}
+ 			),
+ 
+diff --git a/typo3conf/AdditionalConfiguration.php b/typo3conf/AdditionalConfiguration.php
+index 269cb19..3db2e3a 100644
+--- a/typo3conf/AdditionalConfiguration.php
++++ b/typo3conf/AdditionalConfiguration.php
+@@ -10,4 +10,13 @@ $GLOBALS['TYPO3_CONF_VARS']['SYS']['setDBinit'] = "SET SESSION sql_mode='';";
+ //set to flock as simple can have problems on azure
+ $GLOBALS['TYPO3_CONF_VARS']['SYS']['lockingMode'] = 'flock';
+ 
+-$GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['rtehtmlarea']['defaultConfiguration'] = 'typical';
+\ No newline at end of file
++$GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['rtehtmlarea']['defaultConfiguration'] = 'typical';
++
++//fix openssl config path
++putenv("OPENSSL_CONF=" . dirname(__FILE__) . "\openssl.cnf");
++
++$types = array("cache_pages", "cache_pagesection", "cache_hash", "cache_rootline");
++foreach ($types as $ct) {
++    $GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations'][$ct]['backend'] = 'TYPO3\\CMS\\Core\\Cache\\Backend\\WincacheBackend';
++    $GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations'][$ct]['options'] = array();
++};
+\ No newline at end of file
+-- 
+2.5.0
+
