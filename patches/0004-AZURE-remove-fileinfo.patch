@@ -1,0 +1,24 @@
+From 00867360e6ea1c00b1ad599502564946386725b0 Mon Sep 17 00:00:00 2001
+From: ksjogo <jogo@kronberger-spiele.de>
+Date: Mon, 25 Jan 2016 15:22:14 +0100
+Subject: [AZURE] remove fileinfo
+
+---
+ typo3/sysext/install/Classes/SystemEnvironment/Check.php | 1 -
+ 1 file changed, 1 deletion(-)
+
+diff --git a/typo3/sysext/install/Classes/SystemEnvironment/Check.php b/typo3/sysext/install/Classes/SystemEnvironment/Check.php
+index 98b642b..193676c 100644
+--- a/typo3/sysext/install/Classes/SystemEnvironment/Check.php
++++ b/typo3/sysext/install/Classes/SystemEnvironment/Check.php
+@@ -52,7 +52,6 @@ class Check
+      * @var array List of required PHP extensions
+      */
+     protected $requiredPhpExtensions = array(
+-        'fileinfo',
+         'filter',
+         'gd',
+         'hash',
+-- 
+2.7.0
+

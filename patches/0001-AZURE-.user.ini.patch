@@ -1,16 +1,16 @@
-From cd56bb67dd8eed2e209d9765988c867a57f1b2a7 Mon Sep 17 00:00:00 2001
+From f73655e20d3974067a64800109946adefefd715a Mon Sep 17 00:00:00 2001
 From: ksjogo <jogo@kronberger-spiele.de>
 Date: Fri, 14 Aug 2015 12:53:39 +0200
-Subject: [PATCH] .user.ini
+Subject: [AZURE] .user.ini
 
 ---
- .user.ini | 3 +++
- 1 file changed, 3 insertions(+)
+ .user.ini | 4 ++++
+ 1 file changed, 4 insertions(+)
  create mode 100644 .user.ini
 
 diff --git a/.user.ini b/.user.ini
 new file mode 100644
-index 0000000..0797a5b
+index 0000000..48681de
 --- /dev/null
 +++ b/.user.ini
 @@ -0,0 +1,4 @@
@@ -19,5 +19,5 @@ index 0000000..0797a5b
 +max_execution_time = 240
 +max_input_vars = 1500
 -- 
-2.5.0
+2.7.0
 

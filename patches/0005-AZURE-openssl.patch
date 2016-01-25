@@ -1,0 +1,126 @@
+From 79e85b83d78d1a4c32db2f36d961e7180dae6704 Mon Sep 17 00:00:00 2001
+From: ksjogo <jogo@kronberger-spiele.de>
+Date: Mon, 25 Jan 2016 15:37:35 +0100
+Subject: [AZURE] openssl
+
+---
+ typo3/sysext/install/Classes/SystemEnvironment/Check.php |  4 +++-
+ .../sysext/install/Classes/SystemEnvironment/openssl.cnf |  9 +++++++++
+ typo3/sysext/rsaauth/Classes/Backend/PhpBackend.php      | 16 ++++++++++++----
+ typo3/sysext/rsaauth/Classes/Backend/openssl.cnf         |  9 +++++++++
+ typo3conf/AdditionalConfiguration.php                    |  5 ++++-
+ 5 files changed, 37 insertions(+), 6 deletions(-)
+ create mode 100644 typo3/sysext/install/Classes/SystemEnvironment/openssl.cnf
+ create mode 100644 typo3/sysext/rsaauth/Classes/Backend/openssl.cnf
+
+diff --git a/typo3/sysext/install/Classes/SystemEnvironment/Check.php b/typo3/sysext/install/Classes/SystemEnvironment/Check.php
+index 193676c..e8fc91c 100644
+--- a/typo3/sysext/install/Classes/SystemEnvironment/Check.php
++++ b/typo3/sysext/install/Classes/SystemEnvironment/Check.php
+@@ -617,7 +617,9 @@ class Check
+     protected function checkOpenSslInstalled()
+     {
+         if (extension_loaded('openssl')) {
+-            $testKey = @openssl_pkey_new();
++            //AdditionalConfiguration is not loaded yet, so we have to hardcore the path
++            $configPath = realpath(dirname(__FILE__) . "/openssl.cnf");
++            $testKey = @openssl_pkey_new(array('config' => $configPath));
+             if (is_resource($testKey)) {
+                 openssl_free_key($testKey);
+                 $status = new Status\OkStatus();
+diff --git a/typo3/sysext/install/Classes/SystemEnvironment/openssl.cnf b/typo3/sysext/install/Classes/SystemEnvironment/openssl.cnf
+new file mode 100644
+index 0000000..df37c3d
+--- /dev/null
++++ b/typo3/sysext/install/Classes/SystemEnvironment/openssl.cnf
+@@ -0,0 +1,9 @@
++# this is an fuzzyily constructed minimal openssl config file
++# to allow the use of the openssl_pkey_new and openssl_csr_new
++# and openssl_csr_export functions in php
++[ req ]
++default_bits = 2048
++distinguished_name = req_distinguished_name
++[ req_distinguished_name ]
++[ v3_req ]
++[ v3_ca ]
+diff --git a/typo3/sysext/rsaauth/Classes/Backend/PhpBackend.php b/typo3/sysext/rsaauth/Classes/Backend/PhpBackend.php
+index 94df2e9..c943646 100644
+--- a/typo3/sysext/rsaauth/Classes/Backend/PhpBackend.php
++++ b/typo3/sysext/rsaauth/Classes/Backend/PhpBackend.php
+@@ -22,6 +22,14 @@ namespace TYPO3\CMS\Rsaauth\Backend;
+ class PhpBackend extends AbstractBackend
+ {
+     /**
++     * On AZURE we set the env in AdditionalConfiguration.php
++     */
++    private static function OpenSSLConfig() {
++        $w = array('config' => dirname(__FILE__) . "/openssl.cnf");
++        return $w;
++    }
++
++    /**
+      * Creates a new key pair for the encryption or gets the existing key pair (if one already has been generated).
+      *
+      * There should only be one key pair per request because the second private key would overwrites the first private
+@@ -37,17 +45,17 @@ class PhpBackend extends AbstractBackend
+             return $keyPair;
+         }
+ 
+-        $privateKey = @openssl_pkey_new();
++        $privateKey = @openssl_pkey_new(self::OpenSSLConfig());
+         if ($privateKey !== false) {
+             // Create private key as string
+             $privateKeyStr = '';
+-            openssl_pkey_export($privateKey, $privateKeyStr);
++            openssl_pkey_export($privateKey, $privateKeyStr, NULL, self::OpenSSLConfig());
+             // Prepare public key information
+             $exportedData = '';
+             $csr = openssl_csr_new(array(
+                 'localityName' => 'foo',
+                 'organizationName' => 'bar',
+-            ), $privateKey);
++            ), $privateKey, self::OpenSSLConfig());
+             openssl_csr_export($csr, $exportedData, false);
+             // Get public key (in fact modulus) and exponent
+             $publicKey = $this->extractPublicKeyModulus($exportedData);
+@@ -97,7 +105,7 @@ class PhpBackend extends AbstractBackend
+             // PHP extension has to be configured properly. It
+             // can be installed and available but will not work unless
+             // properly configured. So we check if it works.
+-            $testKey = @openssl_pkey_new();
++            $testKey = @openssl_pkey_new(self::OpenSSLConfig());
+             if (is_resource($testKey)) {
+                 openssl_free_key($testKey);
+                 $result = true;
+diff --git a/typo3/sysext/rsaauth/Classes/Backend/openssl.cnf b/typo3/sysext/rsaauth/Classes/Backend/openssl.cnf
+new file mode 100644
+index 0000000..df37c3d
+--- /dev/null
++++ b/typo3/sysext/rsaauth/Classes/Backend/openssl.cnf
+@@ -0,0 +1,9 @@
++# this is an fuzzyily constructed minimal openssl config file
++# to allow the use of the openssl_pkey_new and openssl_csr_new
++# and openssl_csr_export functions in php
++[ req ]
++default_bits = 2048
++distinguished_name = req_distinguished_name
++[ req_distinguished_name ]
++[ v3_req ]
++[ v3_ca ]
+diff --git a/typo3conf/AdditionalConfiguration.php b/typo3conf/AdditionalConfiguration.php
+index 269cb19..d685c61 100644
+--- a/typo3conf/AdditionalConfiguration.php
++++ b/typo3conf/AdditionalConfiguration.php
+@@ -10,4 +10,7 @@ $GLOBALS['TYPO3_CONF_VARS']['SYS']['setDBinit'] = "SET SESSION sql_mode='';";
+ //set to flock as simple can have problems on azure
+ $GLOBALS['TYPO3_CONF_VARS']['SYS']['lockingMode'] = 'flock';
+ 
+-$GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['rtehtmlarea']['defaultConfiguration'] = 'typical';
+\ No newline at end of file
++$GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['rtehtmlarea']['defaultConfiguration'] = 'typical';
++
++//fix openssl config path
++putenv("OPENSSL_CONF=" . dirname(__FILE__) . "\openssl.cnf");
+-- 
+2.7.0
+
