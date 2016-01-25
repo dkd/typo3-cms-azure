@@ -1,7 +1,7 @@
-From d67b0060da3f6a4769c188dd9bfdca995cf66ccc Mon Sep 17 00:00:00 2001
+From 032895e26448a1f47fc2bb55b7f07b98025e3c28 Mon Sep 17 00:00:00 2001
 From: Johannes Goslar <johannes.goslar@dkd.de>
 Date: Tue, 24 Feb 2015 15:22:47 +0000
-Subject: [PATCH] [AZURE] additional configuration
+Subject: [AZURE] additional configuration
 
 ---
  typo3conf/AdditionalConfiguration.php | 13 +++++++++++++
@@ -29,5 +29,5 @@ index 0000000..269cb19
 +$GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['rtehtmlarea']['defaultConfiguration'] = 'typical';
 \ No newline at end of file
 -- 
-2.2.1
+2.5.4 (Apple Git-61)
 

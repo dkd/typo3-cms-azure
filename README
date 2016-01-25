@@ -1,37 +1,13 @@
 TYPO3 CMS Azure Package Creator
-  Setup:
-    This git repository needs to be checked out into a folder called typo3 to enable the zipping process!
-
   Package Creation:
-    Then just cd to this directory and run azure.sh
-    The script will package the (slightly modified) TYPO3 CMS source and overlay it with azure specific configuration files in ./overlay 
+    Just cd to this directory and run azure.sh
+    The script will patch the TYPO3 CMS source with the local patches from ./patches, add some web application config files and then zip it into a bundle
 
-  Update:
-    
-
-Changes to the TYPO3 source:
-  Install Process:
-    The first install check does not look for the existance of typo3conf because we are shipping these, instead it looks for a file at getFirstInstallFilePath()
-    We are using this functionality instead of ENABLE_INSTALL_TOOL because we cannot be sure, that ENABLE_INSTALL_TOOL has matching date to allow the install
-
-  Fileinfo:
-    The hard dependency on the php fileinfo extension has been removed because it is not present by default on Azure systems
-    Instead it is a weak dependency, with mime_content_type as fallback
-  
+Actual changes to the TYPO3 source:
   OpenSSL/rsaauth:
     A minimal OpenSSL config was added
     These config is set in the env variable OPENSSL_CONF and passed to calls in the rsaauth PhpBackend
-    The config passing sometimes has problems with TYPO3 changes, so functionality should be checked on each rebase
 
-  Extension Manager:
-    The extension cache is taking 17MB of the 20MB available on free Azure Websites
-    At "import" step now only the last meta data version of each package is saved to the cache
-    This will result in unmatched md5s at Package (Introduction) installation, thus the md5 check is skipped (momentarily for all)
 
-Todo:
-  Fix package handling/reenable md5 checks
-
-Future:
-  Remote dependency resolving? Probably happening in v7
-  Porting fileinfo change to Core: https://review.typo3.org/#/c/31256/
-  Improve OpenSSL config in core or use PHP only lib as fallback
+Reformat patches:
+  git format-patch -k "HEAD~`ls -1 ../patches | wc -l|xargs`"
